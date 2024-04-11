@@ -92,24 +92,8 @@ class Amo extends Module
 
     public function install()
     {
-        $shop = __PS_BASE_URI__;
-        Mail::Send(
-            (int)(Configuration::get('PS_LANG_DEFAULT')),
-            'contact',
-            ' Module Amo Installation',
-            array(
-                '{email}' => Configuration::get('PS_SHOP_EMAIL'),
-                '{message}' => 'Module Amo will be installed on ' . $shop
-            ),
-            'info@rus-design.com',
-            NULL,
-            NULL,
-            NULL
-        );
         return parent::install() &&
-            $this->registerHook('actionOrderDetail') &&
-            $this->registerHook('actionValidateOrder') &&
-            $this->registerHook('displayOrderConfirmation');
+            $this->registerHook('actionValidateOrder');
     }
 
     public function uninstall()
@@ -426,11 +410,6 @@ class Amo extends Module
         }
     }
 
-    public function hookActionOrderDetail()
-    {
-        //
-    }
-
     public function hookActionValidateOrder($params)
     {
 
@@ -646,10 +625,5 @@ class Amo extends Module
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 // Add contact to Amo END
-    }
-
-    public function hookDisplayOrderConfirmation()
-    {
-        //
     }
 }
